@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue-resource插件使用</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="../node_modules/vue/dist/vue.min.js"></script>
+    <script src="../node_modules/vue-resource/dist/vue-resource.js"></script>
+</head>
+<body>
+    <div id="app" class="container">
+        <h1>vue-resource插件功能</h1>
+        <a href="javascript:;" class="btn btn-primary" v-on:click="get">Get请求</a>
+        <a href="javascript:;" class="btn btn-primary" @click="post">Post请求</a>
+        <a href="javascript:;" class="btn btn-primary" @click="jsonp">JSONP请求</a>
+        <a href="javascript:;" class="btn btn-primary" @click="http">Http请求</a>
+        <div>
+            <span>{{msg}}</span>
+        </div>
+    </div>
+    <script>
+    new Vue({
+        el:"#app",
+        data:{
+            msg:""
+        },
+        http:{
+            root:"http://127.0.0.1/vue2.0全栈打造商城/imoocMall/"
+        },
+        //全局拦截器
+        mounted:function(){
+            Vue.http.interceptors.push((request,next)=>{
+                console.log("request init");
+                next(response=>{
+                    console.log("response init");
+                    return response;
+                    this.msg = response;
+                })
+            })
+        },
+        methods:{
+            get:function(){
+                this.$http.get("package.json",{
+                    params:{
+                       userName:"worker1"
+                    },
+                    headers:{
+                       token:"111"
+                    }
+                }).then(res=>{
+                    this.msg = res.data;
+                })
+            },
+            post:function(){
+                this.$http.post("package.json",{
+                    params:{
+                        userName:"worker2"
+                    },
+                    headers:{
+                        token:"222",
+                        card:"5508096"
+                    }
+                }).then(res=>{
+                    this.msg = res.data;
+                })
+            },
+            jsonp:function(){
+                this.$http.jsonp("http://www.baidu.com",res=>{
+                    this.msg = res.data;
+                })
+            },
+            http:function(){
+                this.$http({
+                    url:"package.json",
+                    method:"get",
+                    params:{
+                        data:"我真帅"
+                    }
+                }).then(res=>{
+                    this.msg = res.data;
+                })
+            }
+        }
+    })
+    </script>
+</body>
+</html>

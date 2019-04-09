@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vuex</title>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script src="../../node_modules/vuex/dist/vuex.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>{{msg}}</h2>
+        <button @click="add">增加</button>
+        <button @click="changeToSix">变为6</button>
+        <counter></counter>
+    </div>
+    <script>
+    const counter = {
+        template:`<div>
+            <div>点击次数:{{count}}</div>
+            <div>用户名:{{userName}}</div>
+            <div>{{sayHello}}</div>
+                  </div>
+            `,
+        computed:{
+            count(){
+                return this.$store.state.count;
+            },
+            userName(){
+                return this.$store.state.userName;
+            },
+            sayHello(){
+                return this.$store.getters.sayHello;
+            }
+        }
+    }
+    const store = new Vuex.Store({
+        state: {
+            count:0,
+            userName:'XXX'
+        },
+        getters: {
+            sayHello(state){
+                return 'Hello '+state.userName
+            }
+        },
+        mutations: {
+            increament(state){
+                state.count++;
+            },
+            change(state,num){
+                state.count = num;
+            },
+            initUserName(state,userName){
+                state.userName = userName;
+            }
+        },
+        actions: {
+            increamentAction(context,num){
+                context.commit("increament");
+            }
+        }
+    });
+    new Vue({
+        el:"#app",
+        store,
+        data:{
+            msg:"Vuex的使用"
+        },
+        components: {
+            counter
+        },
+        methods: {
+            add(){
+                this.$store.dispatch("increamentAction");
+            },
+            changeToSix(){
+                this.$store.commit("change",6);
+                this.$store.commit("initUserName",'jojo');
+            },
+        }
+    })
+    </script>
+</body>
+</html>

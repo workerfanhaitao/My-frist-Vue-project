@@ -1,0 +1,36 @@
+{
+    "status":"0",
+    "msg":"",
+    "result":[
+        {
+            "productId":"001",
+            "productName":"mi1",
+            "productPrice":499,
+            "productImg":"1.jpg"
+        },
+        {
+            "productId":"002",
+            "productName":"mi2",
+            "productPrice":699,
+            "productImg":"2.jpg"
+        },
+        {
+            "productId":"003",
+            "productName":"mi3",
+            "productPrice":899,
+            "productImg":"3.jpg"
+        },
+        {
+            "productId":"004",
+            "productName":"mi4",
+            "productPrice":1099,
+            "productImg":"4.jpg"
+        },
+        {
+            "productId":"005",
+            "productName":"mi5",
+            "productPrice":1499,
+            "productImg":"5.jpg"
+        }
+    ]
+}

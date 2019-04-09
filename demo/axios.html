@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.min.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div id="app">
+        <h1>axios功能演示</h1>
+        <a href="javascript:;" class="btn btn-primary" @click="get">get请求</a>
+        <a href="javascript:;" class="btn btn-primary" @click="post">post请求</a>
+        <a href="javascript:;" class="btn btn-primary" @click="jsonp">jsonp请求</a>
+        <a href="javascript:;" class="btn btn-primary" @click="http">http请求</a>
+        <div>
+            <span>{{msg}}</span>
+        </div>
+    </div>
+    <script>
+    new Vue({
+        el:"#app",
+        data:{
+            msg:""
+        },
+        methods:{
+            get:function(){
+                axios.get("../package.json",{
+                    params:{
+                        userName:"Mr 1"
+                    },
+                    headers:{
+                        token:"777"
+                    }
+                }).then(res=>{
+                    this.msg = res.data;
+                }).catch(error=>{
+                    this.msg = error;
+                })
+            },
+            post:function(){
+                axios.post("../package.json",{
+                    userName:"Mr 2",
+                    headers:{
+                        token:"666"
+                    }
+                }).then(res=>{
+                    this.msg = res.data;
+                })
+            },
+            jsonp:function(){
+               
+            },
+            http:function(){
+                axios({
+                    url:"../package.json",
+                    method:"post",
+                    params:{
+                        userName:"Mr 3"
+                    }
+                }).then(res=>{
+                    this.msg = res.data;
+                })
+            }
+        }
+    })
+    </script>
+</body>
+</html>
